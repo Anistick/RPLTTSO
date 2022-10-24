@@ -4,6 +4,7 @@ import pygame # The sound starter thingy majingy
 import time # Time.sleep for delaying in spaces
 import wave # wave
 import uuid # rand
+from markupsafe import escape
 pygame.init() # Init
 pygame.mixer.init() # Init
 class TextToSpeech: # Main Class
@@ -32,7 +33,7 @@ class TextToSpeech: # Main Class
             
             threading.Thread(target=self._play_audio, args=(pron,delay,)).start()
             delay += 0.145
-        of = "static/output/"+str(uuid.uuid4())+".wav"
+        of = "static/output/"+escape(str_input)+"_"+'-'.join(list_pron)+'_'+str(uuid.uuid4())+".wav"
         ofd = []
         for i in list_pron:
             i = f"static/sounds/{i}.wav"
@@ -48,8 +49,8 @@ class TextToSpeech: # Main Class
             op.close()
             self._fml = []
         return of
-      except:
-            print("T")
+      except Exception as e:
+            import traceback;traceback.print_exc()
 		
             
     
